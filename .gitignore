@@ -6,3 +6,7 @@ target
 *.pdb**/mutants.out*/
 
 **/mutants.out*/
+
+# Added by cargo
+
+/target

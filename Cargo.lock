@@ -3,5 +3,5 @@
 version = 4
 
 [[package]]
-name = "GameBoy_Emulator"
+name = "Rust_GameBoy_Emuator"
 version = "0.1.0"

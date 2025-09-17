@@ -1,5 +1,5 @@
 [package]
-name = "GameBoy_Emulator"
+name = "Rust_GameBoy_Emuator"
 version = "0.1.0"
 edition = "2024"
 
