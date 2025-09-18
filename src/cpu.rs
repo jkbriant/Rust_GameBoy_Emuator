@@ -1,10 +1,33 @@
+#[derive(Copy, Clone, Debug)]
 pub enum Instruction {
+    // System Control
     NOP,
+    HALT,
+    // INVALID,
+    // Load
+    // LOAD_A(u8),
+    // LOAD_B(u8),
+    // LOAD_C(u8),
+    // LOAD_D(u8),
+    // LOAD_A_B, // load B to A
+    // LOAD_B_A, // load A to B
+
+    // Arithmetic
+    // INC_A,
+    // DEC_A,
+    // DEC_B,
+    // ADD_A_B,
+    // ADD_A(u8),
+
+    // Jumps
+    JUMP(u16),
 }
 
 const MEMORY_SIZE: usize = 0x10000;
 
 pub struct CPU {
+    pub enabled: bool,
+
     pub register_a: u8,
     pub register_b: u8,
     pub register_c: u8,
@@ -24,6 +47,8 @@ pub struct CPU {
 impl CPU {
     pub fn new() -> Self {
         CPU {
+            enabled: false,
+
             register_a: 0,
             register_b: 0,
             register_c: 0,
@@ -43,8 +68,11 @@ impl CPU {
 
     // performs the provided intruction on itself and moves the program_counter
     pub fn execute(&mut self, instruction: Instruction) {
+        self.cycle_counter += 1;
         match (instruction) {
-            Instruction::NOP => return,
+            Instruction::NOP => self.program_counter += 1,
+            Instruction::JUMP(address) => self.program_counter = address,
+            Instruction::HALT => self.enabled = false,
         }
     }
 }
