@@ -1,31 +1,50 @@
 pub enum Instruction {
-    load_a(u8),
-    load_b(u8),
+    NOP,
 }
 
+const MEMORY_SIZE: usize = 0x10000;
+
 pub struct CPU {
-    program_counter: u8,
     pub register_a: u8,
     pub register_b: u8,
+    pub register_c: u8,
+    pub register_d: u8,
+    pub register_e: u8,
+    pub register_h: u8,
+    pub register_l: u8,
+
+    pub program_counter: u16,
+    pub stack_pointer: u16,
+
+    pub memory: [u8; MEMORY_SIZE],
+
+    pub cycle_counter: u64,
 }
 
 impl CPU {
     pub fn new() -> Self {
         CPU {
-            program_counter: 0,
             register_a: 0,
             register_b: 0,
+            register_c: 0,
+            register_d: 0,
+            register_e: 0,
+            register_h: 0,
+            register_l: 0,
+
+            program_counter: 0,
+            stack_pointer: 0,
+
+            memory: [0; MEMORY_SIZE],
+
+            cycle_counter: 0,
         }
     }
 
+    // performs the provided intruction on itself and moves the program_counter
     pub fn execute(&mut self, instruction: Instruction) {
         match (instruction) {
-            Instruction::load_a(value) => {
-                self.register_a = value;
-            }
-            Instruction::load_b(value) => {
-                self.register_b = value;
-            }
+            Instruction::NOP => return,
         }
     }
 }

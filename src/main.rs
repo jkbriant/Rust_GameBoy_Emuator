@@ -12,8 +12,8 @@ fn main() {
         cpu.register_a, cpu.register_b
     );
 
-    cpu.execute(Instruction::load_a(0x05));
-    cpu.execute(Instruction::load_b(0x09));
+    // cpu.execute(Instruction::load_a(0x05));
+    // cpu.execute(Instruction::load_b(0x09));
 
     println!("->");
     println!(
@@ -23,5 +23,7 @@ fn main() {
 }
 
 fn decode_instruction(opcode: &u8) -> Instruction {
-    return Instruction::load_b(0x01);
+    match (opcode) {
+        _ => return Instruction::NOP,
+    }
 }
