@@ -1,78 +1,66 @@
-#[derive(Copy, Clone, Debug)]
-pub enum Instruction {
-    // System Control
-    NOP,
-    HALT,
-    // INVALID,
-    // Load
-    // LOAD_A(u8),
-    // LOAD_B(u8),
-    // LOAD_C(u8),
-    // LOAD_D(u8),
-    // LOAD_A_B, // load B to A
-    // LOAD_B_A, // load A to B
+#[derive(Debug, Default)]
+pub struct Registers {
+    pub a: u8,
+    pub b: u8,
+    pub c: u8,
+    pub d: u8,
+    pub e: u8,
+    pub h: u8,
+    pub l: u8,
 
-    // Arithmetic
-    // INC_A,
-    // DEC_A,
-    // DEC_B,
-    // ADD_A_B,
-    // ADD_A(u8),
-
-    // Jumps
-    JUMP(u16),
+    pub sp: u16,
+    pub pc: u16,
 }
 
-const MEMORY_SIZE: usize = 0x10000;
+impl Registers {
+    pub fn _get_bc(&self) -> u16 {
+        ((self.b as u16) << 8) | (self.c as u16)
+    }
+
+    pub fn _set_bc(&mut self, value: u16) {
+        self.b = (value >> 8) as u8;
+        self.c = value as u8;
+    }
+
+    pub fn _get_hl(&self) -> u16 {
+        ((self.h as u16) << 8) | (self.l as u16)
+    }
+
+    pub fn _set_hl(&mut self, value: u16) {
+        self.h = (value >> 8) as u8;
+        self.l = value as u8;
+    }
+
+    pub fn _get_de(&self) -> u16 {
+        ((self.d as u16) << 8) | (self.e as u16)
+    }
+
+    pub fn _set_de(&mut self, value: u16) {
+        self.d = (value >> 8) as u8;
+        self.e = value as u8;
+    }
+}
 
 pub struct CPU {
-    pub enabled: bool,
-
-    pub register_a: u8,
-    pub register_b: u8,
-    pub register_c: u8,
-    pub register_d: u8,
-    pub register_e: u8,
-    pub register_h: u8,
-    pub register_l: u8,
-
-    pub program_counter: u16,
-    pub stack_pointer: u16,
-
-    pub memory: [u8; MEMORY_SIZE],
-
-    pub cycle_counter: u64,
+    pub reg: Registers,
+    pub halted: bool,
 }
 
 impl CPU {
-    pub fn new() -> Self {
+    pub fn _new() -> Self {
         CPU {
-            enabled: false,
-
-            register_a: 0,
-            register_b: 0,
-            register_c: 0,
-            register_d: 0,
-            register_e: 0,
-            register_h: 0,
-            register_l: 0,
-
-            program_counter: 0,
-            stack_pointer: 0,
-
-            memory: [0; MEMORY_SIZE],
-
-            cycle_counter: 0,
+            reg: Registers::default(),
+            halted: false,
         }
     }
 
-    // performs the provided intruction on itself and moves the program_counter
-    pub fn execute(&mut self, instruction: Instruction) {
-        self.cycle_counter += 1;
-        match (instruction) {
-            Instruction::NOP => self.program_counter += 1,
-            Instruction::JUMP(address) => self.program_counter = address,
-            Instruction::HALT => self.enabled = false,
+    pub fn _execute_instruction(&mut self) -> u32 {
+        if self.halted {
+            return 4;
         }
+
+        // let opcode =
+
+        return 0;
     }
 }
