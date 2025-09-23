@@ -1,5 +1,3 @@
-// test
-
 use core::panic;
 
 const MEMORY_SIZE: usize = 0x2000;
